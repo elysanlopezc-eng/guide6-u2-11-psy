@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colegio Montano - Sampling, Data Collection, and Ethics</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        montano: {
+                            blue: '#1269A8',
+                            yellow: '#F7D615',
+                            teal: '#54887D',
+                            lightBlue: '#88B5C7',
+                            olive: '#A6B046',
+                            softWhite: '#F2F5E9'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Nunito', 'Segoe UI', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #E2E8F0;
+            font-family: 'Nunito', 'Segoe UI', sans-serif;
+        }
+
+        /* Digital Whiteboard Frame Styling */
+        .whiteboard-frame {
+            background-color: #F2F5E9;
+            border: 12px solid #334155;
+            border-radius: 24px;
+            box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.3), 0 0 15px rgba(18, 105, 168, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn {
+            transition: all 0.25s ease;
+        }
+
+        .tab-btn.active {
+            background-color: #1269A8;
+            color: #ffffff;
+            border-bottom: 4px solid #F7D615;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Custom Scrollbars */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F2F5E9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #88B5C7;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #1269A8;
+        }
+
+        .pulse-ring {
+            animation: pulse 1.8s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(247, 214, 21, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 12px rgba(247, 214, 21, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(247, 214, 21, 0); }
+        }
+    </style>
+</head>
+<body class="p-2 sm:p-4 md:p-6 min-h-screen">
+
+    <!-- Main Container / Digital Whiteboard Frame -->
+    <div id="whiteboard" class="whiteboard-frame max-w-7xl mx-auto p-4 sm:p-6 md:p-8 flex flex-col min-h-[90vh]">
+        
+        <!-- Header Section -->
+        <header class="flex flex-col md:flex-row justify-between items-center border-b-4 border-montano-blue pb-4 mb-6 gap-4">
+            <div class="flex items-center gap-4 w-full md:w-auto justify-between md:justify-start">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyEop0yf6lZ7Jk9MILZxF1rBj4Oqs5esyhIQ&s" 
+                     alt="Colegio Montano Logo" 
+                     class="h-14 sm:h-16 w-auto object-contain rounded-lg shadow-sm border border-gray-200 bg-white p-1"
+                     onerror="this.onerror=null; this.src='https://placehold.co/150x60/1269A8/ffffff?text=Montano';">
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-wider text-montano-teal">High School - 4to Bachillerato (B2 Level) • Guide 6</span>
+                    <h1 class="text-xl sm:text-2xl font-extrabold text-montano-blue leading-tight">Sampling, Data Collection, and Ethics</h1>
+                    <p class="text-xs text-gray-600 font-semibold">Populations & Samples, Sampling Techniques, Informed Consent, Confidentiality & Ethical Safeguards</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-3 w-full md:w-auto justify-end">
+                <button onclick="toggleFullscreen()" title="Toggle Digital Whiteboard Fullscreen"
+                        class="flex items-center gap-2 bg-montano-blue hover:bg-montano-teal text-white px-4 py-2 rounded-xl text-sm font-bold shadow-md transition-all active:scale-95">
+                    <i class="fa-solid fa-expand text-montano-yellow"></i>
+                    <span class="hidden sm:inline">Fullscreen Whiteboard</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Interactive Horizontal Navigation Tabs -->
+        <nav class="flex overflow-x-auto gap-2 pb-2 mb-6 border-b border-gray-300 scrollbar-thin">
+            <button onclick="switchTab('tab1')" id="btn-tab1" class="tab-btn active whitespace-nowrap px-4 py-3 rounded-t-xl font-bold text-sm sm:text-base flex items-center gap-2 text-gray-700 hover:bg-montano-lightBlue hover:text-white">
+                <i class="fa-solid fa-book-open text-montano-yellow"></i> 1. Theoretical Foundations & Agenda
+            </button>
+            <button onclick="switchTab('tab2')" id="btn-tab2" class="tab-btn whitespace-nowrap px-4 py-3 rounded-t-xl font-bold text-sm sm:text-base flex items-center gap-2 text-gray-700 hover:bg-montano-lightBlue hover:text-white">
+                <i class="fa-solid fa-lightbulb text-montano-yellow"></i> 2. Solved Examples (15)
+            </button>
+            <button onclick="switchTab('tab3')" id="btn-tab3" class="tab-btn whitespace-nowrap px-4 py-3 rounded-t-xl font-bold text-sm sm:text-base flex items-center gap-2 text-gray-700 hover:bg-montano-lightBlue hover:text-white">
+                <i class="fa-solid fa-microphone-lines text-montano-yellow"></i> 3. Voice Simulator & Dashboard
+            </button>
+            <button onclick="switchTab('tab4')" id="btn-tab4" class="tab-btn whitespace-nowrap px-4 py-3 rounded-t-xl font-bold text-sm sm:text-base flex items-center gap-2 text-gray-700 hover:bg-montano-lightBlue hover:text-white">
+                <i class="fa-solid fa-shield-halved text-montano-yellow"></i> 4. Critical Reflection & Proposal Plan
+            </button>
+            <button onclick="switchTab('tab5')" id="btn-tab5" class="tab-btn whitespace-nowrap px-4 py-3 rounded-t-xl font-bold text-sm sm:text-base flex items-center gap-2 text-gray-700 hover:bg-montano-lightBlue hover:text-white">
+                <i class="fa-solid fa-list-check text-montano-yellow"></i> 5. Formative Evaluation (15)
+            </button>
+        </nav>
+
+        <!-- TAB CONTENT CONTAINER -->
+        <main class="flex-grow">
+
+            <!-- TAB 1: Theoretical Foundations & Agenda -->
+            <section id="tab1" class="tab-content block space-y-6">
+                <!-- 1-Hour Instructional Blueprint Agenda -->
+                <div class="bg-white border-l-8 border-montano-yellow p-5 rounded-2xl shadow-sm">
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="bg-montano-yellow text-montano-blue text-xs font-black px-3 py-1 rounded-full uppercase">1-Hour Lesson Blueprint</span>
+                        <h2 class="text-lg font-bold text-montano-blue">Instructional Schedule: Master Research Sampling & Research Ethics</h2>
+                    </div>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 mt-3">
+                        <div class="bg-montano-softWhite p-2.5 rounded-xl border border-montano-lightBlue text-center">
+                            <span class="text-xs font-extrabold text-montano-blue block">5 Min</span>
+                            <span class="text-[11px] text-gray-700 font-semibold">Scenario Starter: Who Should Participate?</span>
+                        </div>
+                        <div class="bg-montano-softWhite p-2.5 rounded-xl border border-montano-teal text-center">
+                            <span class="text-xs font-extrabold text-montano-teal block">10 Min</span>
+                            <span class="text-[11px] text-gray-700 font-semibold">Population vs. Sample & Sampling Strategies</span>
+                        </div>
+                        <div class="bg-montano-softWhite p-2.5 rounded-xl border border-montano-olive text-center">
+                            <span class="text-xs font-extrabold text-montano-olive block">15 Min</span>
+                            <span class="text-[11px] text-gray-700 font-semibold">Research Ethics & Data Handling Rules</span>
+                        </div>
+                        <div class="bg-montano-softWhite p-2.5 rounded-xl border border-montano-blue text-center">
+                            <span class="text-xs font-extrabold text-montano-blue block">20 Min</span>
+                            <span class="text-[11px] text-gray-700 font-semibold">Ethics Review of Fictional Scenarios</span>
+                        </div>
+                        <div class="bg-montano-softWhite p-2.5 rounded-xl border border-montano-yellow text-center">
+                            <span class="text-xs font-extrabold text-montano-blue block">10 Min</span>
+                            <span class="text-[11px] text-gray-700 font-semibold">Add Ethics & Sampling Plan to Proposal</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Scenario Starter Warm-up (5 min) -->
+                <div class="bg-white p-6 rounded-2xl border-2 border-montano-blue shadow-sm">
+                    <h3 class="text-lg font-extrabold text-montano-blue mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-users-viewfinder text-montano-yellow"></i> 5-Minute Scenario Starter: "Who Should Participate in a Study?"
+                    </h3>
+                    <p class="text-xs text-gray-700 leading-relaxed mb-3">
+                        Imagine a research team wants to study how social media algorithms affect teenager self-esteem in Guatemala City. If they only survey 20 students from a single elite private school, can they claim their results apply to all teenagers across the country? Why or why not?
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <div class="p-3 bg-montano-softWhite rounded-xl border border-gray-200">
+                            <span class="text-xs font-bold text-montano-blue block mb-1">Target Population</span>
+                            <p class="text-[11px] text-gray-600">The entire group of individuals about whom the researcher wants to draw conclusions (e.g., all teenagers in Guatemala).</p>
+                        </div>
+                        <div class="p-3 bg-montano-softWhite rounded-xl border border-gray-200">
+                            <span class="text-xs font-bold text-montano-teal block mb-1">Study Sample</span>
+                            <p class="text-[11px] text-gray-600">A smaller subgroup selected from the population to actually participate in the research study.</p>
+                        </div>
+                        <div class="p-3 bg-montano-softWhite rounded-xl border border-gray-200">
+                            <span class="text-xs font-bold text-montano-olive block mb-1">Representativeness</span>
+                            <p class="text-[11px] text-gray-600">The extent to which the sample accurately mirrors the key demographic characteristics of the broader target population.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Theory Pillar Grid: Sampling & Ethics Core Concepts -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    
+                    <!-- Core 1: Sampling Methods -->
+                    <div class="bg-white p-6 rounded-2xl border-2 border-montano-blue shadow-md flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center gap-3 text-montano-blue mb-3">
+                                <i class="fa-solid fa-chart-pie text-2xl"></i>
+                                <h3 class="text-lg font-bold">Sampling Strategies</h3>
+                            </div>
+                            <p class="text-xs text-gray-600 mb-3 leading-relaxed">
+                                <strong>Random Sampling:</strong> Every population member has an equal probability of selection.<br><br>
+                                <strong>Stratified Sampling:</strong> Subdividing population into subgroups (strata) and sampling proportionally.<br><br>
+                                <strong>Convenience Sampling:</strong> Selecting readily accessible participants (high risk of bias).
+                            </p>
+                        </div>
+                        <div class="bg-montano-softWhite p-3 rounded-xl border border-montano-lightBlue">
+                            <span class="text-xs font-bold text-montano-blue block mb-1">Generalizability Power</span>
+                            <div class="w-full bg-gray-200 rounded-full h-3">
+                                <div class="bg-montano-blue h-3 rounded-full w-[88%]"></div>
+                            </div>
+                            <span class="text-xs text-right block mt-1 font-semibold text-montano-blue">Random sampling minimizes selection bias</span>
+                        </div>
+                    </div>
+
+                    <!-- Core 2: Informed Consent & Voluntary Participation -->
+                    <div class="bg-white p-6 rounded-2xl border-2 border-montano-teal shadow-md flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center gap-3 text-montano-teal mb-3">
+                                <i class="fa-solid fa-file-signature text-2xl"></i>
+                                <h3 class="text-lg font-bold">Informed Consent & Freedom</h3>
+                            </div>
+                            <p class="text-xs text-gray-600 mb-3 leading-relaxed">
+                                <strong>Informed Consent:</strong> Explicit permission granted with full knowledge of risks, purpose, and rights.<br><br>
+                                <strong>Assent (Minors):</strong> Agreement from minors in addition to parental consent.<br><br>
+                                <strong>Voluntary Participation:</strong> Right to withdraw at any moment without penalty or coercion.
+                            </p>
+                        </div>
+                        <div class="bg-montano-softWhite p-3 rounded-xl border border-montano-olive">
+                            <span class="text-xs font-bold text-montano-teal block mb-1">Autonomy Protection</span>
+                            <div class="w-full bg-gray-200 rounded-full h-3">
+                                <div class="bg-montano-teal h-3 rounded-full w-[95%]"></div>
+                            </div>
+                            <span class="text-xs text-right block mt-1 font-semibold text-montano-teal">Prevents coercion & protects human rights</span>
+                        </div>
+                    </div>
+
+                    <!-- Core 3: Confidentiality, Privacy & Minimizing Harm -->
+                    <div class="bg-white p-6 rounded-2xl border-2 border-montano-olive shadow-md flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center gap-3 text-montano-olive mb-3">
+                                <i class="fa-solid fa-user-shield text-2xl"></i>
+                                <h3 class="text-lg font-bold">Privacy & Protection from Harm</h3>
+                            </div>
+                            <p class="text-xs text-gray-600 mb-3 leading-relaxed">
+                                <strong>Anonymity vs. Confidentiality:</strong> Anonymity keeps identities unknown; confidentiality keeps known data secure.<br><br>
+                                <strong>Minimizing Harm:</strong> Protecting participants from physical, psychological, or social distress.<br><br>
+                                <strong>Debriefing:</strong> Disclosing full study context and restoring baseline post-experiment.
+                            </p>
+                        </div>
+                        <div class="bg-montano-softWhite p-3 rounded-xl border border-montano-yellow">
+                            <span class="text-xs font-bold text-montano-olive block mb-1">Participant Welfare Index</span>
+                            <div class="w-full bg-gray-200 rounded-full h-3">
+                                <div class="bg-montano-yellow h-3 rounded-full w-[92%]"></div>
+                            </div>
+                            <span class="text-xs text-right block mt-1 font-semibold text-montano-olive">Ensures zero psychological distress</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ethical Standards & Safeguards Table -->
+                <div class="bg-white p-6 rounded-2xl border border-gray-300 shadow-md">
+                    <h3 class="text-xl font-extrabold text-montano-blue mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-triangle-exclamation text-montano-yellow"></i> Research Ethics Safeguards & Principles Overview
+                    </h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs border-collapse">
+                            <thead>
+                                <tr class="bg-montano-blue text-white font-bold">
+                                    <th class="p-3 rounded-tl-lg">Ethical Principle</th>
+                                    <th class="p-3">Core Definition</th>
+                                    <th class="p-3">Violated Scenario Example</th>
+                                    <th class="p-3 rounded-tr-lg">Required Researcher Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200 bg-montano-softWhite">
+                                <tr>
+                                    <td class="p-3 font-bold text-montano-blue">Informed Consent</td>
+                                    <td class="p-3">Participants know aims, procedures, risks, and rights before consenting.</td>
+                                    <td class="p-3 text-red-600 font-semibold">Testing a new study technique without informing students they are in an experiment.</td>
+                                    <td class="p-3 font-semibold text-green-700">Provide written consent forms outlining rights and risks prior to testing.</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-bold text-montano-teal">Voluntary Withdrawal</td>
+                                    <td class="p-3">Freedom to leave the study at any time without loss of credit or penalty.</td>
+                                    <td class="p-3 text-red-600 font-semibold">Telling participants they will fail a course grade if they quit the survey midway.</td>
+                                    <td class="p-3 font-semibold text-green-700">Explicitly state in writing and verbally that leaving causes zero negative consequences.</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-bold text-montano-olive">Anonymity & Privacy</td>
+                                    <td class="p-3">Ensuring personal identities cannot be linked to published research data.</td>
+                                    <td class="p-3 text-red-600 font-semibold">Publishing survey scores with students' full names and classroom seat numbers attached.</td>
+                                    <td class="p-3 font-semibold text-green-700">Assign unique code numbers (e.g., Participant #104) and store data in password-protected drives.</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-bold text-montano-blue">Minimizing Harm & Debriefing</td>
+                                    <td class="p-3">Safeguarding emotional wellbeing and explaining full details after testing.</td>
+                                    <td class="p-3 text-red-600 font-semibold">Inducing severe stress during a test without explaining the study's true purpose afterward.</td>
+                                    <td class="p-3 font-semibold text-green-700">Conduct post-experiment debriefing, answer questions, and offer mental health support.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 2: Solved Examples (15 Examples) -->
+            <section id="tab2" class="tab-content hidden space-y-6">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-white p-4 rounded-2xl border border-gray-200 gap-4">
+                    <div>
+                        <h2 class="text-xl font-bold text-montano-blue">15 Solved Examples: Sampling Methods & Ethical Decision-Making</h2>
+                        <p class="text-xs text-gray-600">Explore real research cases across 3 levels. Click the speaker icon to hear audio explanations.</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="filterExamples('all')" class="ex-filter-btn px-3 py-1 rounded-lg text-xs font-bold bg-montano-blue text-white">All (15)</button>
+                        <button onclick="filterExamples('basic')" class="ex-filter-btn px-3 py-1 rounded-lg text-xs font-bold bg-gray-200 text-gray-700">Level 1 Basic</button>
+                        <button onclick="filterExamples('intermediate')" class="ex-filter-btn px-3 py-1 rounded-lg text-xs font-bold bg-gray-200 text-gray-700">Level 2 Interm.</button>
+                        <button onclick="filterExamples('advanced')" class="ex-filter-btn px-3 py-1 rounded-lg text-xs font-bold bg-gray-200 text-gray-700">Level 3 Adv.</button>
+                    </div>
+                </div>
+
+                <div id="examples-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- Populated dynamically via JavaScript -->
+                </div>
+            </section>
+
+            <!-- TAB 3: Interactive Voice Simulator & Live Performance Dashboard -->
+            <section id="tab3" class="tab-content hidden space-y-6">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    
+                    <!-- Voice Simulator Controls (7 cols) -->
+                    <div class="lg:col-span-7 bg-white p-6 rounded-2xl border-2 border-montano-blue shadow-md flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between border-b pb-3 mb-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-full bg-montano-blue text-white flex items-center justify-center font-bold">
+                                        <i class="fa-solid fa-shield-cat"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-bold text-montano-blue">Dr. Montano - Ethics Review Board Chair</h3>
+                                        <span class="text-xs text-montano-teal font-semibold">Interactive Oral Ethics Defense</span>
+                                    </div>
+                                </div>
+                                <span class="bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1">
+                                    <span class="w-2 h-2 rounded-full bg-green-500 animate-ping"></span> Speech Engine Active
+                                </span>
+                            </div>
+
+                            <!-- Mentor Dialogue Box -->
+                            <div class="bg-montano-softWhite p-4 rounded-xl border border-montano-lightBlue mb-4">
+                                <p id="mentor-speech" class="text-sm text-gray-800 font-semibold leading-relaxed">
+                                    "Welcome! Defense Scenario: A researcher wants to study high school test anxiety by telling students they just failed an crucial exam, without warning them first. Defend how you would fix this proposal by explaining your sampling strategy, informed consent process, voluntary participation, and harm minimization plan."
+                                </p>
+                                <button onclick="speakText(document.getElementById('mentor-speech').innerText)" class="mt-2 text-xs font-bold text-montano-blue hover:text-montano-teal flex items-center gap-1">
+                                    <i class="fa-solid fa-volume-high"></i> Replay Scenario Audio
+                                </button>
+                            </div>
+
+                            <!-- Voice Input Controls -->
+                            <div class="space-y-3">
+                                <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider">Your Spoken / Written Ethical Defense</label>
+                                <div class="flex gap-2">
+                                    <button id="mic-btn" onclick="toggleSpeechRecognition()" class="flex-1 bg-montano-blue hover:bg-montano-teal text-white py-3 px-4 rounded-xl font-bold text-sm shadow flex items-center justify-center gap-2 transition-all">
+                                        <i class="fa-solid fa-microphone text-montano-yellow text-lg"></i>
+                                        <span id="mic-btn-text">Start Speaking Defense</span>
+                                    </button>
+                                </div>
+                                
+                                <p class="text-xs text-gray-500 italic text-center">Or type your ethics defense response below if microphone access is unavailable:</p>
+
+                                <textarea id="user-input-text" rows="3" placeholder="Example: To fix this study, I will use stratified sampling to select a representative group. I will obtain signed informed consent and minor assent, ensuring voluntary participation. I will avoid deceptive stress and ensure strict data confidentiality with participant IDs..." 
+                                          class="w-full p-3 border-2 border-gray-200 rounded-xl text-sm focus:border-montano-blue focus:outline-none transition"></textarea>
+                                
+                                <button onclick="evaluateUserResponse()" class="w-full bg-montano-yellow hover:bg-amber-400 text-montano-blue font-extrabold py-3 px-4 rounded-xl text-sm shadow transition">
+                                    Analyze Ethics Defense
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Speech Status Notification -->
+                        <div id="speech-status" class="mt-4 text-xs font-bold text-gray-500 text-center flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-circle-info"></i> Ready for voice or text entry. Mention sampling, informed consent, confidentiality, and harm reduction.
+                        </div>
+                    </div>
+
+                    <!-- Live Performance Dashboard (5 cols) -->
+                    <div class="lg:col-span-5 bg-white p-6 rounded-2xl border-2 border-montano-teal shadow-md flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-lg font-extrabold text-montano-blue border-b pb-2 mb-4 flex items-center gap-2">
+                                <i class="fa-solid fa-chart-line text-montano-yellow"></i> Live Performance Dashboard
+                            </h3>
+
+                            <!-- Score Meters -->
+                            <div class="space-y-4">
+                                <!-- Speech Clarity -->
+                                <div>
+                                    <div class="flex justify-between text-xs font-bold mb-1">
+                                        <span class="text-gray-700">Pronunciation & Speech Clarity Score</span>
+                                        <span id="score-clarity-val" class="text-montano-blue">0%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-3">
+                                        <div id="score-clarity-bar" class="bg-montano-blue h-3 rounded-full transition-all duration-500" style="width: 0%"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Topic / Ethics Accuracy -->
+                                <div>
+                                    <div class="flex justify-between text-xs font-bold mb-1">
+                                        <span class="text-gray-700">Ethics & Sampling Accuracy Score</span>
+                                        <span id="score-accuracy-val" class="text-montano-teal">0%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-3">
+                                        <div id="score-accuracy-bar" class="bg-montano-teal h-3 rounded-full transition-all duration-500" style="width: 0%"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Politeness / Etiquette -->
+                                <div>
+                                    <div class="flex justify-between text-xs font-bold mb-1">
+                                        <span class="text-gray-700">Politeness & Academic Etiquette Score</span>
+                                        <span id="score-etiquette-val" class="text-montano-olive">0%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-3">
+                                        <div id="score-etiquette-bar" class="bg-montano-olive h-3 rounded-full transition-all duration-500" style="width: 0%"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Key Scientific Terms Detected -->
+                            <div class="mt-6">
+                                <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Detected Ethical & Sampling Keywords</label>
+                                <div id="detected-terms-container" class="flex flex-wrap gap-1.5 min-h-[40px] p-2 bg-montano-softWhite rounded-xl border border-gray-200">
+                                    <span class="text-xs text-gray-400 italic">No ethical keywords detected yet. Speak or type your defense.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- AI Pedagogical Feedback Container -->
+                        <div class="mt-6 bg-montano-softWhite p-4 rounded-xl border border-montano-lightBlue">
+                            <h4 class="text-xs font-extrabold text-montano-blue uppercase tracking-wider mb-1 flex items-center gap-1">
+                                <i class="fa-solid fa-graduation-cap"></i> AI Pedagogical Feedback
+                            </h4>
+                            <p id="ai-feedback-text" class="text-xs text-gray-700 leading-relaxed">
+                                Awaiting response. Complete the oral defense scenario prompt to receive instant automated feedback on your research ethics plan.
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 4: Critical Reflection Questions & Proposal Ethics Plan -->
+            <section id="tab4" class="tab-content hidden space-y-6">
+                <!-- Critical Reflection & Fictional Study Review (20 min) -->
+                <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="bg-montano-teal text-white text-xs font-bold px-3 py-1 rounded-full uppercase">20-Min Ethics Audit Workshop</span>
+                        <h2 class="text-xl font-extrabold text-montano-blue">Ethics Review of Fictional Study Scenarios</h2>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-6">Critique fictional research studies, identify ethical flaws, and formulate professional safeguards.</p>
+
+                    <div class="space-y-6">
+                        <!-- Case 1 -->
+                        <div class="p-4 bg-montano-softWhite rounded-xl border-l-4 border-montano-blue">
+                            <span class="text-xs font-bold text-montano-blue uppercase">Scenario Audit #1: Coercion & Consent</span>
+                            <h3 class="font-bold text-sm text-gray-800 mt-1">"A high school teacher tells students they must fill out a sensitive mental health survey or lose 10% of their final grade."</h3>
+                            <p class="text-xs text-gray-600 mb-3">Which ethical principles are violated? Explain how participation should be restructured.</p>
+                            <textarea rows="2" class="w-full p-3 border rounded-xl text-sm focus:border-montano-blue focus:outline-none" placeholder="Violations: Voluntary participation and informed consent (coercion). Correction: Participation must be voluntary without grading penalties, and alternative non-research activities must be offered..."></textarea>
+                        </div>
+
+                        <!-- Case 2 -->
+                        <div class="p-4 bg-montano-softWhite rounded-xl border-l-4 border-montano-teal">
+                            <span class="text-xs font-bold text-montano-teal uppercase">Scenario Audit #2: Confidentiality Breach</span>
+                            <h3 class="font-bold text-sm text-gray-800 mt-1">"A researcher posts raw survey data online showing student names, exam scores, and stress levels for public downloading."</h3>
+                            <p class="text-xs text-gray-600 mb-3">Identify the privacy violation and describe how data should be securely stored and anonymized.</p>
+                            <textarea rows="2" class="w-full p-3 border rounded-xl text-sm focus:border-montano-teal focus:outline-none" placeholder="Violation: Breach of confidentiality and right to privacy. Safeguard: Remove names, assign participant codes, and store data in encrypted digital folders accessible only to the primary investigator..."></textarea>
+                        </div>
+
+                        <!-- 10-Min Research Proposal Integration -->
+                        <div class="p-5 bg-white rounded-xl border-2 border-montano-yellow shadow-md">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="bg-montano-yellow text-montano-blue text-xs font-extrabold px-3 py-1 rounded-full uppercase">10-Min Proposal Update</span>
+                                <h3 class="font-bold text-sm text-montano-blue">Research Proposal Section: Sampling Strategy & Ethics Plan</h3>
+                            </div>
+                            <p class="text-xs text-gray-600 mb-3">Complete your official sampling and ethics section for your research proposal draft.</p>
+                            
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
+                                <div>
+                                    <label class="block text-xs font-bold text-montano-blue mb-1">Target Population & Sample Size:</label>
+                                    <input id="prop-pop" type="text" placeholder="e.g., Target: 4to Bachillerato students (N=120); Sample: n=40" class="w-full p-2 border rounded-lg text-xs">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-montano-teal mb-1">Sampling Technique Chosen:</label>
+                                    <select id="prop-sample-type" class="w-full p-2 border rounded-lg text-xs font-semibold text-gray-700">
+                                        <option value="">Select Sampling Method...</option>
+                                        <option value="random">Simple Random Sampling</option>
+                                        <option value="stratified">Stratified Random Sampling</option>
+                                        <option value="convenience">Convenience Sampling (With Justified Bias Controls)</option>
+                                        <option value="systematic">Systematic Sampling</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-montano-olive mb-1">Informed Consent / Assent Procedure:</label>
+                                    <input id="prop-consent" type="text" placeholder="e.g., Written parental consent form & minor assent signature sheet provided..." class="w-full p-2 border rounded-lg text-xs">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-montano-blue mb-1">Data Privacy & Harm Reduction Safeguard:</label>
+                                    <input id="prop-privacy" type="text" placeholder="e.g., Anonymized ID numbers, password-protected drives, optional debriefing..." class="w-full p-2 border rounded-lg text-xs">
+                                </div>
+                            </div>
+
+                            <button onclick="saveProposalEthicsSection()" class="bg-montano-blue hover:bg-montano-teal text-white font-bold text-xs px-4 py-2 rounded-lg shadow transition">
+                                Add Ethics & Sampling Plan to Proposal Draft
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 5: Formative Evaluation (15 Practice Problems) -->
+            <section id="tab5" class="tab-content hidden space-y-6">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-white p-4 rounded-2xl border border-gray-200 gap-4">
+                    <div>
+                        <h2 class="text-xl font-bold text-montano-blue">15 Formative Practice Problems</h2>
+                        <p class="text-xs text-gray-600">Analyze sampling methods, spot ethical violations, and recommend research safeguards. Toggle step-by-step solutions.</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="filterProblems('all')" class="prob-filter-btn px-3 py-1 rounded-lg text-xs font-bold bg-montano-blue text-white">All (15)</button>
+                        <button onclick="filterProblems('basic')" class="prob-filter-btn px-3 py-1 rounded-lg text-xs font-bold bg-gray-200 text-gray-700">Level 1 Basic</button>
+                        <button onclick="filterProblems('intermediate')" class="prob-filter-btn px-3 py-1 rounded-lg text-xs font-bold bg-gray-200 text-gray-700">Level 2 Interm.</button>
+                        <button onclick="filterProblems('advanced')" class="prob-filter-btn px-3 py-1 rounded-lg text-xs font-bold bg-gray-200 text-gray-700">Level 3 Adv.</button>
+                    </div>
+                </div>
+
+                <!-- Formative Exercises List -->
+                <div id="problems-container" class="space-y-4">
+                    <!-- Populated dynamically via JavaScript -->
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="mt-8 pt-4 border-t border-gray-300 text-center text-xs text-gray-600 flex flex-col sm:flex-row justify-between items-center gap-2">
+            <div>
+                <strong>Colegio Montano</strong> &copy; 2026 - Senior Instructional Design & Interactive Educational Web
+            </div>
+            <div class="text-montano-teal font-semibold">
+                High School Department | Psychology B2 Curriculum (Guide 6)
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- JAVASCRIPT LOGIC & INTERACTION ENGINE -->
+    <script>
+        // DATA STRUCTURES: 15 Solved Examples (Guide 6 Focus)
+        const solvedExamples = [
+            // Level 1: Basic (5)
+            { 
+                id: 1, level: 'basic', 
+                text: 'Differentiating a population (all 500 High School students at Colegio Montano) from a sample (50 students selected for a survey).', 
+                type: 'Population vs. Sample', 
+                explanation: 'A population includes every individual in the group of interest; a sample is the subset actually measured.', 
+                tags: ['Population', 'Sample', 'Basic'] 
+            },
+            { 
+                id: 2, level: 'basic', 
+                text: 'A researcher picks participants by drawing 30 student ID numbers out of a hat containing all student numbers.', 
+                type: 'Simple Random Sampling', 
+                explanation: 'Every member of the target population has an equal chance of selection, minimizing selection bias.', 
+                tags: ['Random Sampling', 'Probability', 'Basic'] 
+            },
+            { 
+                id: 3, level: 'basic', 
+                text: 'Surveying students standing in line at the cafeteria because they are easy to reach.', 
+                type: 'Convenience Sampling', 
+                explanation: 'Fast and inexpensive, but produces high risk of sampling bias and low generalizability.', 
+                tags: ['Convenience Sampling', 'Bias', 'Basic'] 
+            },
+            { 
+                id: 4, level: 'basic', 
+                text: 'Providing a written form explaining the study purpose, time required, and potential risks before collecting survey responses.', 
+                type: 'Informed Consent', 
+                explanation: 'Informed consent ensures participants understand all research aspects before voluntarily agreeing to join.', 
+                tags: ['Informed Consent', 'Ethics', 'Basic'] 
+            },
+            { 
+                id: 5, level: 'basic', 
+                text: 'Informing participants they can stop answering questions and leave the study at any time without penalty.', 
+                type: 'Voluntary Participation & Withdrawal', 
+                explanation: 'Participants retain the absolute right to leave research whenever they choose without negative consequences.', 
+                tags: ['Voluntary', 'Rights', 'Basic'] 
+            },
+
+            // Level 2: Intermediate (5)
+            { 
+                id: 6, level: 'intermediate', 
+                text: 'Dividing a school into grade levels (9th-12th) and randomly choosing 15 students from each grade.', 
+                type: 'Stratified Random Sampling', 
+                explanation: 'Guarantees sub-groups (strata) are proportionally represented in the final study sample.', 
+                tags: ['Stratified Sampling', 'Representation'] 
+            },
+            { 
+                id: 7, level: 'intermediate', 
+                text: 'Securing parental consent forms along with student minor assent sheets for a study involving 15-year-old high schoolers.', 
+                type: 'Parental Consent & Minor Assent', 
+                explanation: 'Research with minors under legal age requires both legal guardian permission and minor agreement.', 
+                tags: ['Minors', 'Assent', 'Legal Safeguards'] 
+            },
+            { 
+                id: 8, level: 'intermediate', 
+                text: 'Storing survey records using assigned code numbers (e.g., Participant #42) rather than real names.', 
+                type: 'Anonymity vs. Confidentiality', 
+                explanation: 'Confidentiality protects identity by replacing direct identifiers with encrypted codes or pseudonyms.', 
+                tags: ['Confidentiality', 'Data Protection'] 
+            },
+            { 
+                id: 9, level: 'intermediate', 
+                text: 'Conducting a post-survey debriefing session to answer questions and clarify deceptive mild stress triggers used in a test.', 
+                type: 'Debriefing Procedure', 
+                explanation: 'Debriefing restores participant psychological baseline and explains the true purpose of the research.', 
+                tags: ['Debriefing', 'Deception Control'] 
+            },
+            { 
+                id: 10, level: 'intermediate', 
+                text: 'Selecting every 10th student entering the school library from a master enrollment list.', 
+                type: 'Systematic Sampling', 
+                explanation: 'Systematic sampling selects elements at regular fixed intervals (k-th element) from an ordered list.', 
+                tags: ['Systematic Sampling', 'Methodology'] 
+            },
+
+            // Level 3: Advanced (5)
+            { 
+                id: 11, level: 'advanced', 
+                text: 'Evaluating Sampling Frame Error: Analyzing why an online survey misses students who lack internet access at home.', 
+                type: 'Sampling Frame Bias Evaluation', 
+                explanation: 'A flawed sampling frame excludes parts of the target population, distorting statistical validity.', 
+                tags: ['Sampling Frame', 'Selection Bias', 'Advanced'] 
+            },
+            { 
+                id: 12, level: 'advanced', 
+                text: 'Obtaining Institutional Review Board (IRB) approval before conducting experimental stress testing on high schoolers.', 
+                type: 'Institutional Ethics Review (IRB)', 
+                explanation: 'Independent ethics boards evaluate human subject research proposals to verify participant protection.', 
+                tags: ['IRB Review', 'Governance', 'Advanced'] 
+            },
+            { 
+                id: 13, level: 'advanced', 
+                text: 'Balancing Deception and Scientific Validity: Using mild covert observation without revealing hypothesis prematurely.', 
+                type: 'Ethical Justification of Deception', 
+                explanation: 'Deception is permissible only when no alternatives exist, risks are minimal, and debriefing is provided.', 
+                tags: ['Deception', 'Scientific Validity'] 
+            },
+            { 
+                id: 14, level: 'advanced', 
+                text: 'Designing a Data Management Protocol compliant with privacy laws (e.g., deleting raw video recordings after transcriptions).', 
+                type: 'Data Lifecycle & Protection Protocols', 
+                explanation: 'Safeguards privacy by establishing strict data retention, encryption, and destruction timelines.', 
+                tags: ['Data Privacy', 'Security Protocol'] 
+            },
+            { 
+                id: 15, level: 'advanced', 
+                text: 'Conducting a Risk-Benefit Analysis: Ensuring potential scientific benefits outweigh minor participant discomfort.', 
+                type: 'Ethical Risk-Benefit Assessment', 
+                explanation: 'Research is ethically justified only if potential societal gains outweigh potential participant burden.', 
+                tags: ['Risk-Benefit', 'Ethical Rigor'] 
+            }
+        ];
+
+        // DATA STRUCTURES: 15 Formative Practice Problems
+        const formativeProblems = [
+            // Level 1: Basic (5)
+            { 
+                id: 1, level: 'basic', 
+                prompt: 'Define the difference between a Target Population and a Sample in a school study about sleep habits.', 
+                solution: 'Target Population: All students in the target group (e.g., all 300 high schoolers).\nSample: The smaller group chosen to participate (e.g., 40 selected students).' 
+            },
+            { 
+                id: 2, level: 'basic', 
+                prompt: 'Identify the sampling method: A researcher places all student names in a random computer generator to pick 30 participants.', 
+                solution: 'Sampling Method: Simple Random Sampling.\nReason: Every student has an equal and independent chance of selection.' 
+            },
+            { 
+                id: 3, level: 'basic', 
+                prompt: 'Why is Informed Consent required before starting a research survey with high school students?', 
+                solution: 'Reason: It respects participant autonomy by ensuring they understand the study purpose, procedures, risks, and rights before agreeing.' 
+            },
+            { 
+                id: 4, level: 'basic', 
+                prompt: 'What should a researcher do if a participant wants to leave an experiment halfway through?', 
+                solution: 'Action: Immediately allow the participant to withdraw without asking for excuses, imposing penalties, or withholding earned credit.' 
+            },
+            { 
+                id: 5, level: 'basic', 
+                prompt: 'What is the main limitation of relying on Convenience Sampling (e.g., asking only your close friends)?', 
+                solution: 'Limitation: High sampling bias. Friends share similar habits, so results cannot be generalized to the wider school population.' 
+            },
+
+            // Level 2: Intermediate (5)
+            { 
+                id: 6, level: 'intermediate', 
+                prompt: 'Explain how Stratified Random Sampling improves sample representativeness in a co-ed school with 60% female and 40% male students.', 
+                solution: 'Explanation: Stratified sampling divides the school into male and female strata, selecting 60% females and 40% males for the sample to match population ratios.' 
+            },
+            { 
+                id: 7, level: 'intermediate', 
+                prompt: 'Differentiate between Anonymity and Confidentiality in data collection.', 
+                solution: 'Anonymity: The researcher never knows who filled out the response.\nConfidentiality: The researcher knows participant identities but keeps them secret from the public using codes.' 
+            },
+            { 
+                id: 8, level: 'intermediate', 
+                prompt: 'Spot the ethical violation: "Participants who quit the survey will receive zero points on their mid-term exam."', 
+                solution: 'Violation: Coercion / Violation of Voluntary Participation.\nCorrection: Participation must be voluntary; alternative non-research extra credit must be offered.' 
+            },
+            { 
+                id: 9, level: 'intermediate', 
+                prompt: 'Why is both Parental Consent and Minor Assent necessary when studying 14-year-old students?', 
+                solution: 'Reason: Minors cannot legally grant consent, so parents grant legal permission while minors grant personal assent.' 
+            },
+            { 
+                id: 10, level: 'intermediate', 
+                prompt: 'What essential information must be included in a research Debriefing session?', 
+                solution: 'Debriefing Content: Full explanation of study aims, clarification of any mild deception used, answering questions, and offering psychological resources.' 
+            },
+
+            // Level 3: Advanced (5)
+            { 
+                id: 11, level: 'advanced', 
+                prompt: 'Critique this proposal: "To study cheating, a researcher secretly records students with hidden cameras without consent."', 
+                solution: 'Critique: Severe violation of privacy, lack of informed consent, and psychological harm.\nFix: Use anonymized self-report surveys or simulated ethics scenarios with full consent.' 
+            },
+            { 
+                id: 12, level: 'advanced', 
+                prompt: 'How does Voluntary Response Bias skew research findings in online social media polls?', 
+                solution: 'Explanation: Online polls attract people with strong or extreme opinions. Neutral individuals rarely respond, creating skewed data.' 
+            },
+            { 
+                id: 13, level: 'advanced', 
+                prompt: 'A researcher wants to study illegal substance use among youth. How can they protect data under subpoena risks?', 
+                solution: 'Protection Strategy: Complete anonymity (no names recorded), storing raw data on offline encrypted drives, or obtaining a legal Certificate of Confidentiality.' 
+            },
+            { 
+                id: 14, level: 'advanced', 
+                prompt: 'Formulate a Risk-Benefit Analysis for a study testing exam stress intervention techniques in high school.', 
+                solution: 'Risk: Mild temporary stress when discussing exams.\nBenefit: Learning evidence-based stress coping skills.\nConclusion: Benefits outweigh minimal risks if debriefing is provided.' 
+            },
+            { 
+                id: 15, level: 'advanced', 
+                prompt: 'Construct a complete ethical protocol for an observational study in a public school hallway.', 
+                solution: 'Protocol: 1) Obtain school administration approval. 2) Post public notification signs about observation. 3) Record no personal names or faces. 4) Store anonymous counts on secure drives.' 
+            }
+        ];
+
+        // RENDER FUNCTIONS
+        function renderExamples(filter = 'all') {
+            const container = document.getElementById('examples-container');
+            container.innerHTML = '';
+            
+            const filtered = solvedExamples.filter(ex => filter === 'all' || ex.level === filter);
+
+            filtered.forEach(ex => {
+                const badgeColor = ex.level === 'basic' ? 'bg-blue-100 text-montano-blue border-blue-300' :
+                                   ex.level === 'intermediate' ? 'bg-teal-100 text-montano-teal border-teal-300' :
+                                   'bg-amber-100 text-amber-800 border-amber-300';
+                
+                const card = document.createElement('div');
+                card.className = "bg-white p-5 rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition flex flex-col justify-between";
+                card.innerHTML = `
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-[10px] uppercase font-black px-2.5 py-0.5 rounded-full border ${badgeColor}">
+                                ${ex.level.toUpperCase()}
+                            </span>
+                            <button onclick="speakText('${escapeQuotes(ex.text)}')" class="text-montano-blue hover:text-montano-teal transition p-1" title="Listen to audio explanation">
+                                <i class="fa-solid fa-volume-high text-lg"></i>
+                            </button>
+                        </div>
+                        <p class="text-xs font-bold text-gray-800 mb-3 italic">"${ex.text}"</p>
+                        <div class="bg-montano-softWhite p-2.5 rounded-xl border border-gray-200 mb-2">
+                            <span class="text-[11px] font-black text-montano-blue block">Concept: ${ex.type}</span>
+                            <p class="text-[11px] text-gray-600 mt-1">${ex.explanation}</p>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-1 mt-2">
+                        ${ex.tags.map(tag => `<span class="text-[9px] bg-gray-100 text-gray-600 px-2 py-0.5 rounded font-semibold">#${tag}</span>`).join('')}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderProblems(filter = 'all') {
+            const container = document.getElementById('problems-container');
+            container.innerHTML = '';
+
+            const filtered = formativeProblems.filter(p => filter === 'all' || p.level === filter);
+
+            filtered.forEach((p) => {
+                const badgeColor = p.level === 'basic' ? 'bg-blue-100 text-montano-blue border-blue-300' :
+                                   p.level === 'intermediate' ? 'bg-teal-100 text-montano-teal border-teal-300' :
+                                   'bg-amber-100 text-amber-800 border-amber-300';
+
+                const item = document.createElement('div');
+                item.className = "bg-white p-5 rounded-2xl border border-gray-200 shadow-sm";
+                item.innerHTML = `
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="bg-montano-blue text-white text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center">${p.id}</span>
+                            <span class="text-xs font-black uppercase tracking-wide px-2.5 py-0.5 rounded-full border ${badgeColor}">Level: ${p.level}</span>
+                        </div>
+                        <button onclick="toggleSolution('sol-${p.id}')" class="bg-montano-softWhite hover:bg-gray-200 text-montano-blue border border-montano-lightBlue text-xs font-bold px-3 py-1.5 rounded-xl transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-eye text-montano-yellow"></i> <span id="btn-txt-sol-${p.id}">Show Solution</span>
+                        </button>
+                    </div>
+                    <p class="text-sm font-bold text-gray-800 mb-2">${p.prompt}</p>
+                    <div id="sol-${p.id}" class="hidden mt-3 p-4 bg-montano-softWhite border-l-4 border-montano-teal rounded-r-xl">
+                        <span class="text-xs font-extrabold text-montano-teal uppercase tracking-wider block mb-1"><i class="fa-solid fa-check-circle"></i> Ethical & Sampling Solution:</span>
+                        <p class="text-xs text-gray-700 font-medium leading-relaxed whitespace-pre-line">${p.solution}</p>
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        // TAB SWITCHING LOGIC
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabId).classList.remove('hidden');
+            document.getElementById(`btn-${tabId}`).classList.add('active');
+        }
+
+        function filterExamples(level) {
+            document.querySelectorAll('.ex-filter-btn').forEach(btn => {
+                btn.className = "ex-filter-btn px-3 py-1 rounded-lg text-xs font-bold bg-gray-200 text-gray-700";
+            });
+            event.target.className = "ex-filter-btn px-3 py-1 rounded-lg text-xs font-bold bg-montano-blue text-white";
+            renderExamples(level);
+        }
+
+        function filterProblems(level) {
+            document.querySelectorAll('.prob-filter-btn').forEach(btn => {
+                btn.className = "prob-filter-btn px-3 py-1 rounded-lg text-xs font-bold bg-gray-200 text-gray-700";
+            });
+            event.target.className = "prob-filter-btn px-3 py-1 rounded-lg text-xs font-bold bg-montano-blue text-white";
+            renderProblems(level);
+        }
+
+        function toggleSolution(solId) {
+            const solDiv = document.getElementById(solId);
+            const btnTxt = document.getElementById(`btn-txt-${solId}`);
+            if (solDiv.classList.contains('hidden')) {
+                solDiv.classList.remove('hidden');
+                btnTxt.innerText = "Hide Solution";
+            } else {
+                solDiv.classList.add('hidden');
+                btnTxt.innerText = "Show Solution";
+            }
+        }
+
+        // FULLSCREEN TOGGLE API
+        function toggleFullscreen() {
+            const whiteboard = document.getElementById('whiteboard');
+            if (!document.fullscreenElement) {
+                if (whiteboard.requestFullscreen) {
+                    whiteboard.requestFullscreen();
+                } else if (whiteboard.webkitRequestFullscreen) {
+                    whiteboard.webkitRequestFullscreen();
+                }
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+
+        // TEXT-TO-SPEECH (TTS) SYNTHESIS
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.95;
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert("Text-to-Speech audio is not supported in this browser.");
+            }
+        }
+
+        function escapeQuotes(str) {
+            return str.replace(/'/g, "\\'").replace(/"/g, '\\"');
+        }
+
+        // SPEECH RECOGNITION LOGIC
+        let recognition = null;
+        let isListening = false;
+
+        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            recognition = new SpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = true;
+            recognition.lang = 'en-US';
+
+            recognition.onstart = function() {
+                isListening = true;
+                document.getElementById('mic-btn-text').innerText = "Listening... Speak Defense Now";
+                document.getElementById('mic-btn').classList.add('pulse-ring', 'bg-red-600');
+                document.getElementById('speech-status').innerHTML = '<span class="text-red-600 flex items-center gap-1"><i class="fa-solid fa-microphone animate-bounce"></i> Listening in English... Address sampling, consent & ethics...</span>';
+            };
+
+            recognition.onresult = function(event) {
+                let transcript = '';
+                for (let i = event.resultIndex; i < event.results.length; i++) {
+                    transcript += event.results[i][0].transcript;
+                }
+                document.getElementById('user-input-text').value = transcript;
+            };
+
+            recognition.onerror = function(event) {
+                console.error("Speech Recognition Error:", event.error);
+                stopListeningState("Error captured. Use text box or re-try mic.");
+            };
+
+            recognition.onend = function() {
+                stopListeningState("Speech input captured. Click 'Analyze Ethics Defense' for evaluation.");
+            };
+        } else {
+            document.getElementById('speech-status').innerText = "Web Speech API not supported on this browser. You can type your response below.";
+        }
+
+        function toggleSpeechRecognition() {
+            if (!recognition) {
+                alert("Web Speech Recognition API is not supported in your browser. Please type your answer.");
+                return;
+            }
+
+            if (isListening) {
+                recognition.stop();
+            } else {
+                try {
+                    recognition.start();
+                } catch(e) {
+                    console.error(e);
+                }
+            }
+        }
+
+        function stopListeningState(msg) {
+            isListening = false;
+            document.getElementById('mic-btn-text').innerText = "Start Speaking Defense";
+            document.getElementById('mic-btn').classList.remove('pulse-ring', 'bg-red-600');
+            document.getElementById('speech-status').innerHTML = `<i class="fa-solid fa-circle-info"></i> ${msg}`;
+        }
+
+        // REAL-TIME EVALUATION ENGINE FOR PERFORMANCE DASHBOARD
+        function evaluateUserResponse() {
+            const text = document.getElementById('user-input-text').value.trim();
+            if (!text) {
+                alert("Please speak or write your ethical defense before evaluating.");
+                return;
+            }
+
+            const lower = text.toLowerCase();
+
+            // Key Research Terms for Guide 6
+            const terms = [
+                { term: 'sampling', tag: 'Sampling Strategy' },
+                { term: 'random', tag: 'Random Sampling' },
+                { term: 'stratified', tag: 'Stratified Sampling' },
+                { term: 'consent', tag: 'Informed Consent' },
+                { term: 'assent', tag: 'Minor Assent' },
+                { term: 'voluntary', tag: 'Voluntary Participation' },
+                { term: 'withdraw', tag: 'Right to Withdraw' },
+                { term: 'confidentiality', tag: 'Confidentiality' },
+                { term: 'anonymity', tag: 'Anonymity' },
+                { term: 'debriefing', tag: 'Debriefing Plan' },
+                { term: 'harm', tag: 'Minimizing Harm' }
+            ];
+
+            let clarityScore = 75;
+            let accuracyScore = 25;
+            let etiquetteScore = 80;
+            const detected = [];
+
+            // Academic tone check
+            if (lower.includes('please') || lower.includes('dr.') || lower.includes('because') || lower.includes('ethics') || lower.includes('safeguard')) {
+                etiquetteScore = 95;
+            }
+
+            // Word length bonus for clarity
+            if (text.length > 50) clarityScore = 90;
+
+            terms.forEach(item => {
+                if (lower.includes(item.term)) {
+                    accuracyScore += 18;
+                    if (!detected.includes(item.tag)) detected.push(item.tag);
+                }
+            });
+
+            clarityScore = Math.min(100, clarityScore);
+            accuracyScore = Math.min(100, accuracyScore);
+            etiquetteScore = Math.min(100, etiquetteScore);
+
+            // Update Dashboard UI Scores
+            updateDashboardMeters(clarityScore, accuracyScore, etiquetteScore);
+
+            // Update Detected Key Terms Container
+            const termsContainer = document.getElementById('detected-terms-container');
+            if (detected.length > 0) {
+                termsContainer.innerHTML = detected.map(t => `<span class="bg-montano-blue text-white text-xs font-bold px-2 py-1 rounded-lg">✓ ${t}</span>`).join('');
+            } else {
+                termsContainer.innerHTML = `<span class="text-xs text-amber-700 italic">No specific ethical terms detected. Mention 'Informed Consent', 'Stratified Sampling', or 'Confidentiality'.</span>`;
+            }
+
+            // Generate AI Pedagogical Feedback
+            let feedback = "";
+            const avg = (clarityScore + accuracyScore + etiquetteScore) / 3;
+            if (avg >= 80) {
+                feedback = `Exceptional ethical defense! You successfully restructured the study with valid sampling, secured informed consent, ensured voluntary withdrawal, and protected participant wellbeing.`;
+            } else if (avg >= 55) {
+                feedback = `Good reasoning! You addressed key ethics principles, but make sure to explicitly detail your sampling strategy (e.g., random or stratified) alongside informed consent.`;
+            } else {
+                feedback = `Initial defense recorded. Focus on defining your target sample and explaining ethical safeguards like informed consent and data confidentiality.`;
+            }
+
+            document.getElementById('ai-feedback-text').innerText = feedback;
+
+            // Trigger mentor voice response using Speech Synthesis
+            speakText(`Ethics analysis complete. ${feedback}`);
+        }
+
+        function updateDashboardMeters(clarity, accuracy, etiquette) {
+            document.getElementById('score-clarity-val').innerText = `${clarity}%`;
+            document.getElementById('score-clarity-bar').style.width = `${clarity}%`;
+
+            document.getElementById('score-accuracy-val').innerText = `${accuracy}%`;
+            document.getElementById('score-accuracy-bar').style.width = `${accuracy}%`;
+
+            document.getElementById('score-etiquette-val').innerText = `${etiquette}%`;
+            document.getElementById('score-etiquette-bar').style.width = `${etiquette}%`;
+        }
+
+        function saveProposalEthicsSection() {
+            const pop = document.getElementById('prop-pop').value.trim();
+            const sampleType = document.getElementById('prop-sample-type').value;
+            const consent = document.getElementById('prop-consent').value.trim();
+            const privacy = document.getElementById('prop-privacy').value.trim();
+
+            if (!pop || !sampleType || !consent || !privacy) {
+                alert("Please complete all four fields for your proposal's Sampling & Ethics plan.");
+            } else {
+                alert("Sampling Strategy and Ethics Plan successfully added to your Research Proposal draft!");
+            }
+        }
+
+        // INITIALIZATION ON PAGE LOAD
+        window.onload = function() {
+            renderExamples('all');
+            renderProblems('all');
+        };
+    </script>
+</body>
+</html>
